@@ -1,0 +1,13 @@
+# Carpetas de compilación
+[Bb]in/
+[Oo]bj/
+
+# Carpeta de Visual Studio (la que daba el error de permisos)
+.vs/
+
+# Archivos de usuario / locales
+*.user
+appsettings.Development.json
+
+# Logs
+*.log
