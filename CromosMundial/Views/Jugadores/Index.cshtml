@@ -1,0 +1,96 @@
+@model IEnumerable<CromosMundial.Models.Jugador>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Jugadores</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Jugador</a>
+</p>
+
+<!-- Formulario de búsqueda -->
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Búsqueda por nombre o equipo..." />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Posicion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCamiseta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipoId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Posicion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.NumeroCamiseta)
+            </td>
+            <td>
+                @item.FechaNacimiento.ToShortDateString()
+            </td>
+            <td>
+                @item.Equipo?.Nombre
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<nav aria-label="Paginación de jugadores">
+    <ul class="pagination">
+        @{
+            int currentPage = ViewData["CurrentPage"] as int? ?? 1;
+            int totalPages = ViewData["TotalPages"] as int? ?? 1;
+            string currentFilter = ViewData["CurrentFilter"] as string ?? "";
+        }
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-searchString="@currentFilter">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

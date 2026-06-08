@@ -1,0 +1,58 @@
+@model CromosMundial.Models.Equipo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Equipo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DirectorTecnico)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DirectorTecnico)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AnioFundacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AnioFundacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GrupoMundialista)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GrupoMundialista)
+        </dd>
+        <dt class = "col-sm-2">
+            País
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Pais?.Nombre
+        </dd>
+        <dt class = "col-sm-2">
+            Logo
+        </dt>
+        <dd class = "col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.Logo))
+            {
+                <img src="@Model.Logo" width="150" />
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Jugadores" asp-action="PorEquipo" asp-route-id="@Model?.Id">Ver Jugadores</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,48 @@
+@model IEnumerable<CromosMundial.Models.Equipo>
+
+@{
+    ViewData["Title"] = "Equipos por país";
+}
+
+<h1>Equipos de @ViewData["PaisNombre"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DirectorTecnico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GrupoMundialista)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.DirectorTecnico)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.GrupoMundialista)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-controller="Paises" asp-action="Details" asp-route-id="@ViewData["PaisId"]">Regresar a País</a>
+</div>

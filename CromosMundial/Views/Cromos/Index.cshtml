@@ -1,0 +1,105 @@
+@model IEnumerable<CromosMundial.Models.Cromo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cromos</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Cromo</a>
+</p>
+
+<!-- Formulario de búsqueda -->
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Búsqueda por edición o jugador..." />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCromo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edicion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorMercado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JugadorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlbumId)
+            </th>
+            <th>
+                Foto
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.NumeroCromo)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Edicion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ValorMercado)
+            </td>
+            <td>
+                @item.Jugador?.Nombre
+            </td>
+            <td>
+                @item.Album?.Nombre
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Foto))
+                {
+                    <img src="@item.Foto" width="60" />
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<nav aria-label="Paginación de cromos">
+    <ul class="pagination">
+        @{
+            int currentPage = ViewData["CurrentPage"] as int? ?? 1;
+            int totalPages = ViewData["TotalPages"] as int? ?? 1;
+            string currentFilter = ViewData["CurrentFilter"] as string ?? "";
+        }
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-searchString="@currentFilter">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
